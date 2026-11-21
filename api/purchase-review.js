@@ -50,7 +50,7 @@ export async function handlePurchaseReview(req, res, apiKey, request = fetch, au
       const response = await request(`https://api.deepseek.com${path}`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-        redirect: 'error',
+        redirect: 'manual',
         body: JSON.stringify(body),
         signal: AbortSignal.timeout(12000),
       })

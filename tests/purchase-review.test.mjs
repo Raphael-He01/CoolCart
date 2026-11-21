@@ -63,7 +63,7 @@ test('HTTP 处理器执行两个 DeepSeek 请求，无配置、坏请求、超�
     calls.push(url)
     assert.equal(url, 'https://api.deepseek.com/chat/completions')
     assert.equal(options.headers.Authorization, 'Bearer test')
-    assert.equal(options.redirect, 'error')
+    assert.equal(options.redirect, 'manual')
     const data = JSON.parse(JSON.parse(options.body).messages[1].content)
     if (data.product.name === '超时') throw new DOMException('timed out', 'TimeoutError')
     if (data.product.name === '限额') return new Response(null, { status: 429 })

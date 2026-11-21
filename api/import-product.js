@@ -19,6 +19,7 @@ function makePost(apiKey, request, signal) {
     const response = await request(`https://api.deepseek.com${path}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      redirect: 'manual',
       body: JSON.stringify(body),
       signal,
     })
