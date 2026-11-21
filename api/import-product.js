@@ -1,5 +1,5 @@
 import { MAX_IMAGE_BYTES, productQuery, readProductLink } from '../src/lib/productImport.js'
-import { importCapturedProductLink, importLinkedProduct, importNamedProduct, importScreenshot } from '../src/lib/linkedProduct.js'
+import { importCapturedProductLink, importCartScreenshot, importLinkedProduct, importNamedProduct, importScreenshot } from '../src/lib/linkedProduct.js'
 import { cartLinkInput } from '../src/lib/cartProductLinks.js'
 import { publicReferenceUrl } from '../src/lib/screenshotSources.js'
 import { ScreenshotImageError, validateScreenshotDataUrl } from '../src/lib/screenshotImage.js'
@@ -73,25 +73,27 @@ async function readPublicHtmlPage(link, request, signal) {
 
 export async function importProduct(input, { apiKey, request = fetch, readPublicHtml, authorize } = {}) {
   const image = input?.image
+  const cartImage = input?.cartImage
   const link = readProductLink(input?.link)
   const query = productQuery(input?.query)
   const captured = cartLinkInput(input?.cartProduct)
-  if ([input?.image, input?.link, input?.query, input?.cartProduct].filter((value) => value != null).length !== 1
-    || (!image && !link && !query && !captured)) {
+  if ([image, cartImage, input?.link, input?.query, input?.cartProduct].filter((value) => value != null).length !== 1
+    || (!image && cartImage == null && !link && !query && !captured)) {
     if (input?.cartProduct != null) throw new ImportError(400, '请单独提交要查找的购物车商品，并核对名称、规格和来源平台。')
-    throw new ImportError(400, '请单独输入 2 至 160 字的商品名称或型号、上传商品截图，或粘贴支持的商品链接。')
+    throw new ImportError(400, '请单独输入 2 至 160 字的商品名称或型号、上传一张截图，或粘贴支持的商品链接。')
   }
   if (!apiKey) {
-    if (image) validateScreenshotDataUrl(image)
+    if (image || cartImage != null) validateScreenshotDataUrl(cartImage ?? image)
     throw new ImportError(503, '尚未配置 DeepSeek。你可以手动补填商品信息。')
   }
-  if (!image && authorize) await authorize()
+  if (!image && cartImage == null && authorize) await authorize()
   const signal = AbortSignal.timeout(26000)
   const post = makePost(apiKey, request, signal)
   const readPage = readPublicHtml ?? ((product) => readPublicHtmlPage(product, request, signal))
   if (link) return importLinkedProduct(link, post, readPage)
   if (query) return importNamedProduct(query, post, readPage)
   if (captured) return importCapturedProductLink(captured, post, readPage)
+  if (cartImage != null) return { items: await importCartScreenshot(cartImage, post, authorize) }
   const result = await importScreenshot(image, post, readPage, authorize)
   if (!result) throw new ImportError(422, '请裁剪到只包含一件商品，并保留清晰的商品名称。')
   return result

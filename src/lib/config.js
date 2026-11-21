@@ -1,7 +1,13 @@
 // 演示模式：网址后加 ?demo=1，所有等待时间缩短到几秒，方便评委现场体验。
 const params = new URLSearchParams(typeof location === 'undefined' ? '' : location.search)
-export const STATIC_WEB_DEMO = import.meta.env?.VITE_COOLCART_STATIC_DEMO === '1'
-export const DEMO = STATIC_WEB_DEMO || params.has('demo')
+const staticWebDemo = import.meta.env?.VITE_COOLCART_STATIC_DEMO === '1'
+const webApiOrigin = (import.meta.env?.VITE_COOLCART_API_ORIGIN || '').replace(/\/$/, '')
+export const WEB_AI_DISABLED = staticWebDemo && !webApiOrigin
+export const DEMO = staticWebDemo || params.has('demo')
+
+export function webApiUrl(path) {
+  return webApiOrigin + path
+}
 // 开发版沿用主屏幕的购物车，只缩短等待时间。演示模式继续使用单独的账本。
 export const SHORT_COOLDOWN = DEMO || (globalThis.location?.protocol === 'coolcart:' && params.get('testBuild') === '1')
 

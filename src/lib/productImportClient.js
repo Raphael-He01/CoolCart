@@ -1,19 +1,19 @@
 import { importCapturedProductLink, importLinkedProduct, importNamedProduct, importScreenshot } from './linkedProduct.js'
 import { readProductLink } from './productImport.js'
-import { STATIC_WEB_DEMO } from './config.js'
+import { WEB_AI_DISABLED, webApiUrl } from './config.js'
 
 export function importHandlers() {
   return window.location.protocol === 'coolcart:' ? window.webkit?.messageHandlers : null
 }
 
 export function hasCartLookup() {
-  if (STATIC_WEB_DEMO) return false
+  if (WEB_AI_DISABLED) return false
   const handlers = importHandlers()
   return window.location.protocol !== 'coolcart:' || Boolean(handlers?.personalProductImport || handlers?.lookupCartProduct)
 }
 
 export async function requestProductImport(input) {
-  if (STATIC_WEB_DEMO) throw new Error('公开演示可手填或粘贴分享链接。')
+  if (WEB_AI_DISABLED) throw new Error('公开演示可手填或粘贴分享链接。')
   const handlers = importHandlers()
   if (handlers?.personalProductImport) {
     const post = (path, body) => handlers.personalProductImport.postMessage({ path, body })
@@ -30,7 +30,7 @@ export async function requestProductImport(input) {
   if (input.cartProduct && handlers?.lookupCartProduct) return handlers.lookupCartProduct.postMessage(input.cartProduct)
   if (window.location.protocol === 'coolcart:' && input.cartProduct) throw new Error('此 App 尚未连接商品查询服务。')
 
-  const response = await fetch('/api/import-product', {
+  const response = await fetch(webApiUrl('/api/import-product'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(input),

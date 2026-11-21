@@ -17,6 +17,42 @@ const row = { url: link, title }
 const page = { url: link, title, content: title + '\n单价：¥380' }
 const quoted = { name: product.name, variant: product.variant, price: 380, evidence: '单价：¥380' }
 
+test('购物车截屏逐行导入，只采信同一行的人民币单价且限额先于识别', async () => {
+  const unit = { name: '罗技 M185 鼠标', variant: '黑色灰边', price: 45,
+    priceKind: 'unit', currency: 'CNY', priceEvidence: '¥45.00' }
+  let quotaChecks = 0
+  const request = async (url, options) => {
+    assert.equal(quotaChecks, 1)
+    assert.equal(new URL(url).pathname, '/chat/completions')
+    const { messages } = JSON.parse(options.body)
+    assert.equal(messages[1].content[1].image_url.url, image)
+    const items = [unit,
+      { ...unit, name: '水月雨 Blessing 3 耳机', variant: '银色', price: 1999.63, priceEvidence: '合计 ¥1999.63' },
+      { ...unit, name: '保温杯', price: 66, priceKind: 'offer', priceEvidence: '券后价 ¥66' },
+      { ...unit, name: '布面笔袋', price: 30, priceEvidence: '¥35' },
+      { ...unit, name: '学生键盘', price: null, priceKind: null, priceEvidence: '' },
+      { ...unit, name: 'https://example.invalid/should-not-be-an-item' },
+    ]
+    return Response.json({ choices: [{ message: { content: JSON.stringify({ items, platform: '京东' }) } }] })
+  }
+  const { items } = await importProduct({ cartImage: image }, { apiKey: 'fixture', request, authorize: () => { quotaChecks++ } })
+  assert.equal(quotaChecks, 1)
+  assert.deepEqual(items.map(({ name, price }) => [name, price]), [
+    ['罗技 M185 鼠标', 45], ['水月雨 Blessing 3 耳机', null], ['保温杯', null], ['布面笔袋', null], ['学生键盘', null],
+  ])
+  assert.deepEqual(items[0], { id: 'cart-row-1', name: unit.name, variant: unit.variant, platform: '京东', price: 45 })
+})
+
+test('批量截图校验、配额或密钥不可用时不调用 DeepSeek', async () => {
+  for (const input of [{ cartImage: 'invalid' }, { cartImage: image, image }, { cartImage: image, query: '罗技 M185 鼠标' }]) {
+    await assert.rejects(importProduct(input, { apiKey: 'fixture', request: assert.fail, authorize: assert.fail }), { status: 400 })
+  }
+  await assert.rejects(importProduct({ cartImage: image }, { request: assert.fail }), { status: 503 })
+  await assert.rejects(importProduct({ cartImage: image }, { apiKey: 'fixture', request: assert.fail, authorize() {
+    throw Object.assign(new Error('Quota exceeded'), { status: 429 })
+  } }), { status: 429 })
+})
+
 async function run({ visual = product, results = [], fetched = page, details = quoted } = {}) {
   const calls = []
   let query

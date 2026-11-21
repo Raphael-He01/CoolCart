@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import { STATIC_WEB_DEMO } from '../lib/config.js'
+import { WEB_AI_DISABLED } from '../lib/config.js'
 import { IMAGE_TYPES, productQuery, readProductLink, readProductLinks } from '../lib/productImport.js'
-import { importHandlers, requestProductImport } from '../lib/productImportClient.js'
+import { hasCartLookup, importHandlers, requestProductImport } from '../lib/productImportClient.js'
 import { prepareScreenshot } from '../lib/prepareScreenshot.js'
 import ScreenShopping from './ScreenShopping.jsx'
 import CartScreenshot from './CartScreenshot.jsx'
@@ -24,8 +24,8 @@ export default function ProductImport({ onExtract, onShowDraft, busy, setBusy, d
   const [openedScreenSharing, setOpenedScreenSharing] = useState(false)
   const bundled = window.location.protocol === 'coolcart:'
   const handlers = importHandlers()
-  const offline = STATIC_WEB_DEMO || (bundled && !handlers?.personalProductImport && !handlers?.importProductLink)
-  const canImportImage = !STATIC_WEB_DEMO && (!bundled || Boolean(handlers?.personalProductImport || handlers?.importProductImage))
+  const offline = WEB_AI_DISABLED || (bundled && !handlers?.personalProductImport && !handlers?.importProductLink)
+  const canImportImage = !WEB_AI_DISABLED && (!bundled || Boolean(handlers?.personalProductImport || handlers?.importProductImage))
   const nativePicker = handlers?.cartScreenshot
 
   function showNotice(tone, title, detail) {
@@ -98,7 +98,7 @@ export default function ProductImport({ onExtract, onShowDraft, busy, setBusy, d
       showNotice('error', '请核对搜索内容', '请输入 2 至 160 字的商品名或型号，或粘贴京东、淘宝、天猫商品链接。')
       return
     }
-    if (query && (STATIC_WEB_DEMO || (bundled && !handlers?.importProductQuery && !handlers?.personalProductImport))) {
+    if (query && (WEB_AI_DISABLED || (bundled && !handlers?.importProductQuery && !handlers?.personalProductImport))) {
       showNotice('error', '在线查询未连接', '请配置个人密钥或团队接口，也可手动填写商品。')
       return
     }
@@ -206,13 +206,13 @@ export default function ProductImport({ onExtract, onShowDraft, busy, setBusy, d
           {lookupFeedback('image')}
         </div>
       </details>}
-      {nativePicker && <CartScreenshot bridge={nativePicker} canShare={Boolean(handlers.cartShareInbox)}
+      {(nativePicker || (!bundled && hasCartLookup())) && <CartScreenshot bridge={nativePicker} canShare={Boolean(handlers?.cartShareInbox)}
         busy={busy} setBusy={setBusy} onImportCart={onImportCart} />}
       {!nativePicker && handlers?.cartShareInbox && <p className="muted small">也可从截屏预览或相册点「共享 → CoolCart」。</p>}
       <details className="import-disclosure" open={!canImportImage}>
         <summary>{offline ? '使用商品分享链接' : '按名称或链接查找'}</summary>
         <div className="field-stack">
-          {offline && <p className="muted small reading-copy">{STATIC_WEB_DEMO
+          {offline && <p className="muted small reading-copy">{WEB_AI_DISABLED
             ? '公开演示使用手填或商品分享链接，购买前使用内置问答。'
             : '单品识图和在线查价需要配置个人密钥或团队接口。你仍可使用分享链接、手填商品或识别购物车截屏。'}</p>}
           <label>

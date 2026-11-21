@@ -1,7 +1,7 @@
 import { IMAGE_TYPES, MAX_IMAGE_BYTES } from './productImport.js'
 
 const extensions = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp' }
-const formatMessage = '请选择 PNG、JPEG 或 WebP 格式的单品截图。'
+const formatMessage = '请选择 PNG、JPEG 或 WebP 格式的截图。'
 const bytesOf = (input) => input instanceof Uint8Array ? input : new Uint8Array(input)
 const ascii = (bytes, offset, count) => String.fromCharCode(...bytes.subarray(offset, offset + count))
 

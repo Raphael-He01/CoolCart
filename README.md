@@ -6,9 +6,9 @@ CrossPointX 2026 逆向 UX 赛道的购物车原型，支持 iOS App 和网页�
 
 [打开 CoolCart 网页演示](https://raphael-he01.github.io/CoolCart/)
 
-在「导入或手填 → 核对商品，手动填写」录入任意商品。例如填入「演示耳机」和 399 元。确认后等待 30 秒，完成餐费题、两项购买问题和购买前提醒。可选择放弃购买，也可在预先核对过购买链接后演示原商品页和实付记录。演示网页使用手填、分享链接和内置问答，数据保存在当前浏览器。iOS 批量截屏识别在原生 App 体验。
+从「导入或手填」选择单品截图、购物车截图、商品分享链接或手填。网页购物车截图先显示预览，用户确认后由联网服务识别出多个商品，按规格补查价格和购买页。请先裁去姓名、地址和手机号。入库后等待 30 秒，完成餐费题、两项购买问题和购买前提醒。网页购物车和账本保存在当前浏览器。iOS 版另有 Apple Vision 本机识别、系统相册分享和实时屏幕共享入口。
 
-网页演示由 GitHub Pages 托管。构建该版本时运行 `VITE_COOLCART_STATIC_DEMO=1 npm run build -- --base=/CoolCart/`。发布分支 `gh-pages` 的根目录包含对应构建产物。
+网页演示由 GitHub Pages 托管。构建联网演示时运行 `VITE_COOLCART_STATIC_DEMO=1 VITE_COOLCART_API_ORIGIN=https://你的后端 npm run build -- --base=/CoolCart/`。后端需要允许演示网页的来源。密钥只配置在后端。省略 API 来源时，Pages 版使用手填、分享链接和内置问答。发布分支 `gh-pages` 的根目录包含构建产物。
 
 ## 在 iPhone 上运行
 

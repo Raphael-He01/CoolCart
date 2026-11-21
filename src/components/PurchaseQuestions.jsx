@@ -1,9 +1,9 @@
 import { useEffect, useEffectEvent, useRef, useState } from 'react'
 import { reviewPurchase } from '../lib/purchaseReview.js'
-import { STATIC_WEB_DEMO } from '../lib/config.js'
+import { WEB_AI_DISABLED, webApiUrl } from '../lib/config.js'
 
 async function requestReview(input, signal) {
-  if (STATIC_WEB_DEMO) throw new Error('公开演示使用内置问答。')
+  if (WEB_AI_DISABLED) throw new Error('公开演示使用内置问答。')
   if (window.location.protocol === 'coolcart:') {
     const handlers = window.webkit?.messageHandlers
     if (!handlers?.personalProductImport && !handlers?.purchaseReview) throw new Error('离线版未配置 DeepSeek')
@@ -18,7 +18,7 @@ async function requestReview(input, signal) {
       request.then(resolve, reject).finally(() => signal.removeEventListener('abort', abort))
     })
   }
-  const response = await fetch('/api/purchase-review', {
+  const response = await fetch(webApiUrl('/api/purchase-review'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(input),
