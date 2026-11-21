@@ -1,0 +1,84 @@
+.product-import > .import-disclosure:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports selector(details::details-content) {
+    .import-disclosure {
+      --disclosure-duration: 225ms;
+    }
+
+    .import-disclosure::details-content {
+      display: grid;
+      grid-template-rows: minmax(0, 0fr);
+      overflow: clip;
+      overflow-clip-margin: 4px;
+      /* Keep intrinsic sizing available during a reversed fold in WebKit. */
+      content-visibility: visible;
+      visibility: hidden;
+      transition: grid-template-rows var(--disclosure-duration) var(--entry-ease),
+        visibility var(--disclosure-duration);
+    }
+
+    .import-disclosure[open]::details-content {
+      grid-template-rows: minmax(0, 1fr);
+      visibility: visible;
+    }
+
+    .import-disclosure:not([open])::details-content {
+      pointer-events: none;
+      interactivity: inert;
+    }
+
+    .import-disclosure:not([open]):has(> summary:focus-visible)::details-content {
+      /* Keyboard navigation skips the controls as soon as their summary closes. */
+      transition-property: grid-template-rows;
+    }
+
+    .import-disclosure > summary:first-child {
+      transition: margin-block-end var(--disclosure-duration) var(--entry-ease),
+        color var(--feedback-time) ease-out;
+    }
+
+    .import-disclosure[data-scroll-target]::details-content,
+    .import-disclosure[data-scroll-target] > summary:first-child {
+      transition: none;
+    }
+  }
+}
+
+.product-import .import-picture-actions {
+  align-items: center;
+  column-gap: .85rem;
+  row-gap: .15rem;
+}
+
+/* Keep the cart count in view beside the local thumbnail on a phone. */
+.cart-capture-feedback:has(> .screenshot-preview) {
+  display: grid;
+  grid-template-columns: clamp(3rem, 14vw, 4.5rem) minmax(0, 1fr);
+  align-items: start;
+}
+
+.cart-capture-feedback .screenshot-preview img { max-height: 6rem; }
+
+.add-form label.import-file-picker {
+  position: relative;
+  display: inline-grid;
+  max-width: 100%;
+}
+
+.add-form .import-file-picker > input[type='file'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.import-file-picker:has(:focus-visible) .btn { outline: 2px solid var(--blue); outline-offset: 3px; }
+.import-file-picker:has(:disabled) .btn { opacity: .55; cursor: default; }

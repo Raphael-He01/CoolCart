@@ -1,0 +1,116 @@
+.tap-dialog .tap-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: .5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.tap-dialog .tap-heading .panel-heading { border-bottom: 0; }
+
+.tap-dialog .tap-heading-caption {
+  margin-inline-end: .9rem;
+  color: var(--red);
+  font-size: .82rem;
+  letter-spacing: .1em;
+}
+
+.tap-dialog .tap-fixed-option {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.tap-dialog .tap-fixed-option input {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0;
+  accent-color: var(--blue);
+}
+
+.tap-dialog.tap-dialog-arena {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: max(.4rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right))
+    max(.65rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left));
+  overflow: hidden;
+  gap: .6rem;
+  border: 0;
+  background: var(--paper);
+  animation: none;
+  transition: none;
+}
+
+.tap-dialog-arena .tap-hud {
+  display: grid;
+  gap: .25rem;
+  padding: .15rem .5rem .3rem;
+}
+
+.tap-dialog-arena .tap-progress { display: block; height: .6rem; }
+
+.tap-dialog-arena .tap-arena {
+  --target-width: min(7.25rem, 44%);
+  --target-height: min(3.5rem, 100%);
+  position: relative;
+  margin: .35rem;
+  outline: 1px solid var(--line);
+  outline-offset: .35rem;
+  background: radial-gradient(circle, var(--line) 1px, transparent 1px) var(--surface) 0 0 / 20px 20px;
+}
+
+.tap-dialog-arena .tap-arena::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(var(--red), var(--red)) left top / 12px 2px no-repeat,
+    linear-gradient(var(--red), var(--red)) left top / 2px 12px no-repeat,
+    linear-gradient(var(--red), var(--red)) right top / 12px 2px no-repeat,
+    linear-gradient(var(--red), var(--red)) right top / 2px 12px no-repeat,
+    linear-gradient(var(--red), var(--red)) left bottom / 12px 2px no-repeat,
+    linear-gradient(var(--red), var(--red)) left bottom / 2px 12px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 12px 2px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 2px 12px no-repeat;
+}
+
+.tap-dialog-arena .tap-arena :is(.tap-target, .tap-echo) {
+  position: absolute;
+  left: calc((100% - var(--target-width)) * var(--tap-x));
+  top: calc((100% - var(--target-height)) * var(--tap-y));
+  width: var(--target-width);
+  height: var(--target-height);
+  min-height: 0;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.tap-echo { display: none; pointer-events: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .tap-dialog-arena .tap-echo {
+    display: block;
+    border: 2px dashed var(--red);
+    animation: tap-echo-out var(--feedback-time) ease-out both;
+  }
+}
+
+@keyframes tap-echo-out {
+  from { opacity: .42; }
+  to { opacity: 0; }
+}
+
+.tap-dialog-arena .tap-arena .tap-target:is(:active, [data-pressed]):not(:disabled) {
+  background: #801f31;
+  box-shadow: none;
+}

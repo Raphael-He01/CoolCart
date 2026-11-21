@@ -1,0 +1,89 @@
+{
+  "说明": "合成样例，仅用于演示区和本地测试，所有价格和交易均为示例。",
+  "ruleSettings": {
+    "all": false,
+    "categories": [
+      "数码"
+    ],
+    "thresholdYuan": 100,
+    "categoryThresholdYuan": null
+  },
+  "rules": [
+    {
+      "category": "数码",
+      "price": 80,
+      "expected": true
+    },
+    {
+      "category": "生活",
+      "price": 100,
+      "expected": false
+    },
+    {
+      "category": "生活",
+      "price": 100.01,
+      "expected": true
+    },
+    {
+      "category": "数码",
+      "price": 200,
+      "expected": true
+    },
+    {
+      "category": "数码",
+      "price": 399,
+      "expected": true
+    }
+  ],
+  "combinedRuleSettings": {
+    "all": false,
+    "categories": ["数码"],
+    "thresholdYuan": null,
+    "categoryThresholdYuan": 80
+  },
+  "combinedRules": [
+    { "category": "数码", "price": 79.99, "expected": false },
+    { "category": "数码", "price": 80, "expected": false },
+    { "category": "数码", "price": 80.01, "expected": true },
+    { "category": "数码", "price": 200, "expected": true },
+    { "category": "生活", "price": 200, "expected": false },
+    { "category": "数码", "price": null, "expected": false },
+    { "category": "", "price": 200, "expected": false }
+  ],
+  "now": "2026-11-21T12:00:00+08:00",
+  "budgetYuan": 1000,
+  "oldPayment": {
+    "paidAt": "2026-11-08T16:00:00+08:00",
+    "paidCents": 78000,
+    "source": "demo",
+    "stage": "purchased"
+  },
+  "repeatConfirmation": {
+    "paidAt": "2026-11-21T10:00:00+08:00",
+    "price": 399,
+    "paidCents": 36900,
+    "source": "demo",
+    "stage": "purchased"
+  },
+  "expected": {
+    "weekCents": 36900,
+    "monthCents": 114900,
+    "previewBeforePaymentYuan": 1179,
+    "excessPreviewYuan": 179
+  },
+  "boundaryCases": [
+    {
+      "now": "2026-12-01T01:00:00+08:00",
+      "payment": "2026-11-30T23:59:59+08:00",
+      "belongsToWeek": true,
+      "belongsToMonth": false
+    },
+    {
+      "now": "2026-11-23T00:00:00+08:00",
+      "payment": "2026-11-22T23:59:59+08:00",
+      "belongsToWeek": false,
+      "belongsToMonth": true
+    }
+  ],
+  "说明2": "ISO 字符串仅供人核对，调用接口前用 Date.parse 转毫秒时间戳。"
+}

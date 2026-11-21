@@ -1,0 +1,169 @@
+/* Shared motion for the pixel UI. Controls keep their native focus and click behavior. */
+:root {
+  --press-time: 45ms;
+  --release-time: 150ms;
+  --feedback-time: 190ms;
+  --entry-time: 235ms;
+  --entry-ease: cubic-bezier(.2, .75, .25, 1);
+}
+
+.comparison-row:has(input:checked) { background-color: #ffebbc; }
+.timer[data-ready='true'] { color: var(--ink); }
+.stage-badge[data-ready='true'] { background-color: var(--gold); color: var(--ink); }
+.add-form :is(input, select, textarea):focus-visible:not([aria-invalid='true']) { border-color: var(--blue); }
+
+.motion-busy::before {
+  content: '';
+  display: inline-block;
+  width: .84em;
+  height: .18em;
+  margin-inline-end: .42em;
+  vertical-align: .16em;
+  background: repeating-linear-gradient(to right, currentColor 0 .18em, transparent .18em .33em);
+}
+
+@media (hover: hover) {
+  .import-disclosure > summary:hover { color: var(--red); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :is(.btn, .brand, .item-row, .review-screenshot-button, .ledger-product-button) {
+    transition: background-color var(--feedback-time) ease-out, border-color var(--feedback-time) ease-out,
+      box-shadow var(--release-time) ease-out, opacity var(--release-time) ease-out;
+  }
+  .btn.primary:not(.tap-target, :disabled)::after {
+    transition: transform var(--release-time) var(--entry-ease), box-shadow var(--release-time) ease-out,
+      background-color var(--release-time) ease-out;
+  }
+  .btn.primary:not(.tap-target, :disabled):is(:active, [data-pressed])::after,
+  .import-file-picker:has(input:enabled:active) .btn.primary::after {
+    transform: translateY(2px);
+    transition-duration: var(--press-time);
+  }
+
+  :is(.stepper li, .stage-badge, .comparison-row, .add-form input, .add-form select, .add-form textarea) {
+    transition: background-color var(--feedback-time) ease-out,
+      color var(--feedback-time) ease-out, border-color var(--feedback-time) ease-out;
+  }
+  .import-disclosure > summary { transition: color var(--feedback-time) ease-out; }
+
+  .app > .page { animation: page-in var(--feedback-time) ease-out; }
+  .app[data-page-motion='forward'] > .page {
+    --page-offset: min(14px, calc(var(--gutter) - 3px));
+    animation: page-arrive 250ms var(--entry-ease);
+  }
+  .app[data-page-motion='back'] > .page {
+    --page-offset: max(-12px, calc(3px - var(--gutter)));
+    animation: page-arrive 215ms var(--entry-ease);
+  }
+  .app:not([data-page-motion]) > .page > :is(h1, .hero, .item-head),
+  .motion-enter,
+  .error:not([hidden]) {
+    animation: panel-in var(--entry-time) var(--entry-ease);
+  }
+  .hero-coins {
+    animation: hero-coins-in 360ms steps(4, end) 100ms both,
+      hero-coins-float 5.4s steps(5, end) 490ms infinite;
+  }
+  .stepper [aria-current='step'] {
+    position: relative;
+  }
+  .stepper [aria-current='step']::after {
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    content: '';
+    background: var(--gold);
+    transform-origin: left;
+    animation: step-in 360ms var(--entry-ease);
+  }
+  .motion-result { animation: result-in 430ms steps(4, end); }
+
+  .motion-accent,
+  .timer[data-ready='true'],
+  .stage-badge[data-ready='true'] {
+    animation: accent-in 290ms var(--entry-ease);
+  }
+  .motion-busy::before { animation: pixel-wait 1080ms steps(1) infinite; }
+  .toast:not(:empty) { animation: panel-in var(--feedback-time) var(--entry-ease); }
+
+  .confirm-dialog[open] { animation: panel-in var(--entry-time) var(--entry-ease); }
+  .confirm-dialog[open]::backdrop { animation: backdrop-in var(--feedback-time) ease-out; }
+
+  @supports (overlay: auto) and (transition-behavior: allow-discrete) {
+    .confirm-dialog {
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity var(--feedback-time) ease, transform var(--feedback-time) var(--entry-ease),
+        display var(--feedback-time) allow-discrete, overlay var(--feedback-time) allow-discrete;
+    }
+    .confirm-dialog[open] { opacity: 1; transform: none; animation: none; }
+    .confirm-dialog::backdrop {
+      background-color: transparent;
+      transition: background-color var(--feedback-time) ease,
+        display var(--feedback-time) allow-discrete, overlay var(--feedback-time) allow-discrete;
+    }
+    .confirm-dialog[open]::backdrop { background-color: #281b268c; animation: none; }
+    .confirm-dialog:not([open]), .confirm-dialog:not([open])::backdrop { pointer-events: none; }
+
+    @starting-style {
+      .confirm-dialog[open] { opacity: 0; transform: translateY(6px); }
+      .confirm-dialog[open]::backdrop { background-color: transparent; }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.primary:not(.tap-target, :disabled)::after { transition: none; }
+}
+
+@keyframes page-in {
+  from { opacity: .72; }
+  to { opacity: 1; }
+}
+
+@keyframes page-arrive {
+  from { opacity: .78; transform: translateX(var(--page-offset)); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes panel-in {
+  from { opacity: .5; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes accent-in {
+  from { opacity: .6; transform: translateY(2px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-coins-in {
+  from { opacity: .45; transform: translateY(5px) scale(.95); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-coins-float {
+  0%, 72%, 100% { transform: translateY(0); }
+  36% { transform: translateY(-7px); }
+}
+
+@keyframes step-in {
+  from { transform: scaleX(.12); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes result-in {
+  from { box-shadow: inset 0 0 0 3px #b4772d; }
+  to { box-shadow: inset 0 0 0 0 transparent; }
+}
+
+@keyframes pixel-wait {
+  0% { clip-path: inset(0 75% 0 0); }
+  33% { clip-path: inset(0 38% 0 0); }
+  66% { clip-path: inset(0); }
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

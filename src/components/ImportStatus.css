@@ -1,0 +1,39 @@
+.import-state {
+  --state-accent: var(--control-line);
+  min-width: 0;
+  padding: .55rem .65rem;
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--state-accent);
+  background: var(--field);
+}
+
+.import-state-working {
+  --state-accent: var(--blue);
+  background: #f2efe5;
+}
+
+.import-state-review {
+  --state-accent: #a66c22;
+  background: #fff0d5;
+}
+
+.import-state-success {
+  --state-accent: #91651d;
+  background: #fff2d1;
+}
+
+.import-state-error {
+  --state-accent: var(--red);
+  background: #fff0ea;
+}
+
+.import-state-error .import-state-title { color: var(--danger); }
+.import-state-title { font-size: .94rem; text-shadow: .35px 0 currentColor; }
+.import-state-detail { margin-top: .15rem; color: var(--muted); font-size: .875rem; }
+.import-state-action { margin-top: .3rem; }
+.import-state-action > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: .9rem;
+}

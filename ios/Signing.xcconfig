@@ -1,0 +1,2 @@
+// A local file can set DEVELOPMENT_TEAM for builds on this Mac.
+#include? "Signing.local.xcconfig"

@@ -1,0 +1,298 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC0000000000000000000039 /* CartShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CC0000000000000000000030 /* CartShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy,); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CC000000000000000000003B = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0000000000000000000010 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC0000000000000000000033;
+			remoteInfo = CartShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CC0000000000000000000001 /* CoolCart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoolCart.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC0000000000000000000016 /* build-web.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-web.sh"; sourceTree = "<group>"; };
+		CC0000000000000000000017 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
+		CC0000000000000000000030 /* CartShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CartShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC000000000000000000003E /* CartShare-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CartShare-Info.plist"; sourceTree = "<group>"; };
+		CC000000000000000000003F /* CartShareInbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CartShareInbox.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CC0000000000000000000002 /* CoolCart */ = {isa = PBXFileSystemSynchronizedRootGroup; path = CoolCart; sourceTree = "<group>"; };
+		CC0000000000000000000031 /* CartShare */ = {isa = PBXFileSystemSynchronizedRootGroup; path = CartShare; sourceTree = "<group>"; };
+		CC0000000000000000000032 /* CartSharing */ = {isa = PBXFileSystemSynchronizedRootGroup; path = CartSharing; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXGroup section */
+		CC0000000000000000000003 = {
+			isa = PBXGroup;
+			children = (
+				CC0000000000000000000002 /* CoolCart */,
+				CC0000000000000000000031 /* CartShare */,
+				CC0000000000000000000032 /* CartSharing */,
+				CC000000000000000000003E /* CartShare-Info.plist */,
+				CC000000000000000000003F /* CartShareInbox.entitlements */,
+				CC0000000000000000000016 /* build-web.sh */,
+				CC0000000000000000000017 /* Signing.xcconfig */,
+				CC0000000000000000000004 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000004 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CC0000000000000000000001 /* CoolCart.app */,
+				CC0000000000000000000030 /* CartShare.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CC0000000000000000000005 /* CoolCart */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC0000000000000000000011;
+			buildPhases = (
+				CC0000000000000000000006 /* Sources */,
+				CC0000000000000000000007 /* Frameworks */,
+				CC0000000000000000000008 /* Resources */,
+				CC0000000000000000000038 /* Embed App Extensions */,
+				CC0000000000000000000009 /* Bundle web app */,
+			);
+			buildRules = ();
+			dependencies = (CC000000000000000000003A /* CartShare */,);
+			fileSystemSynchronizedGroups = (
+				CC0000000000000000000002 /* CoolCart */,
+				CC0000000000000000000032 /* CartSharing */,
+			);
+			name = CoolCart;
+			productName = CoolCart;
+			productReference = CC0000000000000000000001 /* CoolCart.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CC0000000000000000000033 /* CartShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC0000000000000000000037;
+			buildPhases = (
+				CC0000000000000000000034 /* Sources */,
+				CC0000000000000000000035 /* Frameworks */,
+				CC0000000000000000000036 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			fileSystemSynchronizedGroups = (
+				CC0000000000000000000031 /* CartShare */,
+				CC0000000000000000000032 /* CartSharing */,
+			);
+			name = CartShare;
+			productName = CartShare;
+			productReference = CC0000000000000000000030 /* CartShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXBuildPhase sections */
+		CC0000000000000000000006 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CC0000000000000000000007 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CC0000000000000000000008 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CC0000000000000000000034 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CC0000000000000000000035 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CC0000000000000000000036 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CC0000000000000000000038 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (CC0000000000000000000039 /* CartShare.appex in Embed App Extensions */,);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC0000000000000000000009 /* Bundle web app */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = ();
+			inputPaths = ();
+			name = "Bundle web app";
+			outputPaths = ("$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Web/index.html",);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"$SRCROOT/build-web.sh\"\n";
+		};
+/* End PBXBuildPhase sections */
+
+/* Begin PBXTargetDependency section */
+		CC000000000000000000003A /* CartShare */ = {
+			isa = PBXTargetDependency;
+			target = CC0000000000000000000033 /* CartShare */;
+			targetProxy = CC000000000000000000003B;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXProject section */
+		CC0000000000000000000010 /* Project object */ = {
+			isa = PBXProject;
+			attributes = { BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 2720; LastUpgradeCheck = 2720; };
+			buildConfigurationList = CC0000000000000000000012;
+			developmentRegion = "zh-Hans";
+			knownRegions = ("zh-Hans", Base,);
+			mainGroup = CC0000000000000000000003;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = CC0000000000000000000004 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CC0000000000000000000005 /* CoolCart */,
+				CC0000000000000000000033 /* CartShare */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		CC0000000000000000000020 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				COOLCART_SHARE_INBOX = com.crosspointx.coolcart.share-inbox;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CC0000000000000000000021 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				COOLCART_SHARE_INBOX = com.crosspointx.coolcart.share-inbox;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CC0000000000000000000022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC0000000000000000000017 /* Signing.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CartShareInbox.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ScreenImport-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = CoolCart;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crosspointx.coolcart;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		CC0000000000000000000023 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC0000000000000000000017 /* Signing.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CartShareInbox.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ScreenImport-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = CoolCart;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crosspointx.coolcart;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		CC000000000000000000003C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC0000000000000000000017 /* Signing.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = CartShareInbox.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CartShare-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crosspointx.coolcart.CartShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		CC000000000000000000003D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC0000000000000000000017 /* Signing.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = CartShareInbox.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CartShare-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crosspointx.coolcart.CartShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CC0000000000000000000011 = {isa = XCConfigurationList; buildConfigurations = (CC0000000000000000000022, CC0000000000000000000023,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		CC0000000000000000000012 = {isa = XCConfigurationList; buildConfigurations = (CC0000000000000000000020, CC0000000000000000000021,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		CC0000000000000000000037 = {isa = XCConfigurationList; buildConfigurations = (CC000000000000000000003C, CC000000000000000000003D,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = CC0000000000000000000010 /* Project object */;
+}
