@@ -1,6 +1,6 @@
 import { importCapturedProductLink, importLinkedProduct, importNamedProduct, importScreenshot } from './linkedProduct.js'
 import { readProductLink } from './productImport.js'
-import { WEB_AI_DISABLED, webApiUrl } from './config.js'
+import { WEB_AI_DISABLED, postWebAi } from './config.js'
 
 export function importHandlers() {
   return window.location.protocol === 'coolcart:' ? window.webkit?.messageHandlers : null
@@ -30,13 +30,12 @@ export async function requestProductImport(input) {
   if (input.cartProduct && handlers?.lookupCartProduct) return handlers.lookupCartProduct.postMessage(input.cartProduct)
   if (window.location.protocol === 'coolcart:' && input.cartProduct) throw new Error('此 App 尚未连接商品查询服务。')
 
-  const response = await fetch(webApiUrl('/api/import-product'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
-    signal: AbortSignal.timeout(32000),
-  })
-  if (!response.headers.get('content-type')?.includes('application/json')) throw new Error('这个网页未连接商品查询接口。请打开带后端服务的项目地址。')
+  const response = await postWebAi('/api/import-product', input, AbortSignal.timeout(35000))
+  if (!response.headers.get('content-type')?.includes('application/json')) {
+    if (response.status === 413) throw new Error('上传的截图太大，请裁剪商品区域后重试。')
+    if (response.status === 429) throw new Error('在线识别已达当前时段上限，请稍后重试。')
+    throw new Error('识别服务暂不可用。已保留截图，请重试或手动填写。')
+  }
   const result = await response.json()
   if (!response.ok) throw new Error(result.message || '导入失败。')
   return result

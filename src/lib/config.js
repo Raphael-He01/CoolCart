@@ -5,8 +5,23 @@ const webApiOrigin = (import.meta.env?.VITE_COOLCART_API_ORIGIN || '').replace(/
 export const WEB_AI_DISABLED = staticWebDemo && !webApiOrigin
 export const DEMO = staticWebDemo || params.has('demo')
 
-export function webApiUrl(path) {
-  return webApiOrigin + path
+export async function postWebAi(path, body, signal) {
+  const crossOrigin = Boolean(webApiOrigin && webApiOrigin !== globalThis.location?.origin)
+  try {
+    return await fetch(webApiOrigin + path, {
+      method: 'POST',
+      // A simple cross-origin request avoids a separate Safari preflight.
+      headers: { 'Content-Type': crossOrigin ? 'text/plain;charset=UTF-8' : 'application/json' },
+      credentials: 'omit',
+      redirect: 'error',
+      body: JSON.stringify(body),
+      signal,
+    })
+  } catch (error) {
+    if (signal?.aborted) throw signal.reason || error
+    if (error instanceof TypeError) throw new Error('无法连接识别服务。已保留截图，请重试或手动填写。')
+    throw error
+  }
 }
 // 开发版沿用主屏幕的购物车，只缩短等待时间。演示模式继续使用单独的账本。
 export const SHORT_COOLDOWN = DEMO || (globalThis.location?.protocol === 'coolcart:' && params.get('testBuild') === '1')

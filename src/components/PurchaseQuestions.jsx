@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent, useRef, useState } from 'react'
 import { reviewPurchase } from '../lib/purchaseReview.js'
-import { WEB_AI_DISABLED, webApiUrl } from '../lib/config.js'
+import { WEB_AI_DISABLED, postWebAi } from '../lib/config.js'
 
 async function requestReview(input, signal) {
   if (WEB_AI_DISABLED) throw new Error('公开演示使用内置问答。')
@@ -18,12 +18,7 @@ async function requestReview(input, signal) {
       request.then(resolve, reject).finally(() => signal.removeEventListener('abort', abort))
     })
   }
-  const response = await fetch(webApiUrl('/api/purchase-review'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
-    signal,
-  })
+  const response = await postWebAi('/api/purchase-review', input, signal)
   if (!response.ok) throw new Error('DeepSeek 暂时不可用')
   return response.json()
 }
